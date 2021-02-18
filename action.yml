@@ -1,0 +1,22 @@
+name: 'Resolve vercel preview url'
+description: 'Resolve the preview url of a specific vercel project'
+inputs:
+  vercel_token:
+      description: 'The Vercel token to authenticate with'
+      required: true
+  team_id:  # id of input
+    description: 'The vercel team id'
+    required: true
+  project_id:  # id of input
+    description: 'The vercel project id'
+    required: true
+  github_commit_ref:  # id of input
+    description: 'The commit ref you want to filter on'
+    required: true
+
+outputs:
+  url: # id of output
+    description: 'The vercel deployment url'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'

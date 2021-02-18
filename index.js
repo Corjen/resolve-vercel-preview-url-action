@@ -12,24 +12,25 @@ try {
   console.log(`projectId ${projectId}`);
   console.log(`githubCommitRef ${githubCommitRef}`);
   console.log(`url https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`)
-  const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
+
+  fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
     authorization: `Bearer ${vercelToken}`
-  }}).then(res => res.json())
+  }}).then(res => res.json()).then(response => {
+    console.log(response)
 
-  console.log(response)
+    const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
+    console.log(filtered)
+    if(filtered.length === 0) {
+      throw new Error('No deployments found')
+    }
+
+    core.setOutput("url", filtered[0].url);
+    // Get the JSON webhook payload for the event that triggered the workflow
+    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    console.log(`The event payload: ${payload}`);
+  })
 
 
-  const filtered = response.data.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
-  console.log(filtered)
-  if(filtered.length === 0) {
-    throw new Error('No deployments found')
-  }
-
-
-  core.setOutput("url", filtered[0].url);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
 } catch (error) {
   core.setFailed(error.message);
 }

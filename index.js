@@ -8,15 +8,18 @@ try {
   const teamId = core.getInput('team_id')
   const projectId = core.getInput('project_id')
   const githubCommitRef = core.getInput('github_commit_ref')
-  console.log(`teamId ${teamId}!`);
-  console.log(`projectId ${projectId}!`);
-  console.log(`githubCommitRef ${githubCommitRef}!`);
+  console.log(`teamId ${teamId}`);
+  console.log(`projectId ${projectId}`);
+  console.log(`githubCommitRef ${githubCommitRef}`);
   console.log(`url https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`)
   const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
     authorization: `Bearer ${vercelToken}`
   }}).then(res => res.json())
 
-  const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
+  console.log(response)
+
+
+  const filtered = response.data.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
   console.log(filtered)
   if(filtered.length === 0) {
     throw new Error('No deployments found')

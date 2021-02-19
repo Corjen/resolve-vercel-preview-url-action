@@ -4,13 +4,13 @@ inputs:
   vercel_token:
       description: 'The Vercel token to authenticate with'
       required: true
-  team_id:  # id of input
+  team_id:
     description: 'The vercel team id'
     required: true
-  project_id:  # id of input
+  project_id:
     description: 'The vercel project id'
     required: true
-  github_commit_ref:  # id of input
+  github_commit_ref:
     description: 'The commit ref you want to filter on'
     required: true
 

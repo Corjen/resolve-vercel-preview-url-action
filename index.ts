@@ -12,7 +12,7 @@ async function run () {
     const githubCommitRef = core.getInput('github_commit_ref')
 
     await wait(5000)
-    const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
+    const response = await fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
       authorization: `Bearer ${vercelToken}`
     }}).then(handleFetchResponse)
     core.info(response)

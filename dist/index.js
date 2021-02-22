@@ -5851,7 +5851,6 @@ function run() {
             const response = yield lib(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, { headers: {
                     authorization: `Bearer ${vercelToken}`
                 } }).then(handleFetchResponse);
-            core.info(JSON.stringify(response));
             core.info(JSON.stringify({
                 projectId,
                 githubCommitRef

@@ -2,85 +2,6 @@ module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 750:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__nccwpck_require__.r(__webpack_exports__);
-
-// NAMESPACE OBJECT: ./wait.js
-var wait_namespaceObject = {};
-__nccwpck_require__.r(wait_namespaceObject);
-
-// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
-var core = __nccwpck_require__(699);
-var core_default = /*#__PURE__*/__nccwpck_require__.n(core);
-
-// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
-var github = __nccwpck_require__(806);
-var github_default = /*#__PURE__*/__nccwpck_require__.n(github);
-
-// EXTERNAL MODULE: ./node_modules/node-fetch/lib/index.js
-var lib = __nccwpck_require__(486);
-var lib_default = /*#__PURE__*/__nccwpck_require__.n(lib);
-
-// CONCATENATED MODULE: ./wait.js
-const wait = (milliseconds) => {
-  return new Promise((resolve) => {
-    if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
-    }
-    setTimeout(() => resolve(), milliseconds)
-  });
-};
-
-// CONCATENATED MODULE: ./index.js
-
-
-
-
-
-async function run () {
-  try {
-    const vercelToken = core_default().getInput('vercel_token')
-    const teamId = core_default().getInput('team_id')
-    const projectId = core_default().getInput('project_id')
-    const githubCommitRef = core_default().getInput('github_commit_ref')
-
-    await (0,wait_namespaceObject.default)(5000)
-    const response = lib_default()(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
-      authorization: `Bearer ${vercelToken}`
-    }}).then(res.json)
-
-    core_default().info(`Input`, {
-      projectId,
-      githubCommitRef
-    })
-
-    const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
-
-    if(filtered.length === 0) {
-      throw new Error(`No deployments found`)
-    }
-
-    console.log(`url: ${filtered[0].url}`)
-
-    core_default().setOutput("url", filtered[0].url);
-    // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify((github_default()).context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
-
-  } catch (error) {
-    core_default().setFailed(error.message);
-  }
-}
-
-run()
-
-
-/***/ }),
-
 /***/ 96:
 /***/ (function(__unused_webpack_module, exports, __nccwpck_require__) {
 
@@ -5855,6 +5776,79 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 482:
+/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(699);
+// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
+var github = __nccwpck_require__(806);
+// EXTERNAL MODULE: ./node_modules/node-fetch/lib/index.js
+var lib = __nccwpck_require__(486);
+// CONCATENATED MODULE: ./wait.ts
+const wait = (milliseconds) => {
+    return new Promise((resolve) => {
+        if (typeof milliseconds !== 'number') {
+            throw new Error('milliseconds not a number');
+        }
+        setTimeout(() => resolve('done'), milliseconds);
+    });
+};
+
+// CONCATENATED MODULE: ./index.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+
+
+
+
+function run() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const vercelToken = core.getInput('vercel_token');
+            const teamId = core.getInput('team_id');
+            const projectId = core.getInput('project_id');
+            const githubCommitRef = core.getInput('github_commit_ref');
+            yield wait(5000);
+            const response = lib(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, { headers: {
+                    authorization: `Bearer ${vercelToken}`
+                } }).then((res) => res.json());
+            core.info(JSON.stringify({
+                projectId,
+                githubCommitRef
+            }));
+            const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef);
+            if (filtered.length === 0) {
+                throw new Error(`No deployments found`);
+            }
+            console.log(`url: ${filtered[0].url}`);
+            core.setOutput("url", filtered[0].url);
+            // Get the JSON webhook payload for the event that triggered the workflow
+            const payload = JSON.stringify(github.context.payload, undefined, 2);
+            console.log(`The event payload: ${payload}`);
+        }
+        catch (error) {
+            core.setFailed(error.message);
+            process.exit(1);
+        }
+    });
+}
+run();
+
+
+/***/ }),
+
 /***/ 778:
 /***/ ((module) => {
 
@@ -5999,35 +5993,6 @@ module.exports = require("zlib");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
-/******/ 	/* webpack/runtime/compat get default export */
-/******/ 	(() => {
-/******/ 		// getDefaultExport function for compatibility with non-harmony modules
-/******/ 		__nccwpck_require__.n = (module) => {
-/******/ 			var getter = module && module.__esModule ?
-/******/ 				() => module['default'] :
-/******/ 				() => module;
-/******/ 			__nccwpck_require__.d(getter, { a: getter });
-/******/ 			return getter;
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__nccwpck_require__.d = (exports, definition) => {
-/******/ 			for(var key in definition) {
-/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	})();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	(() => {
-/******/ 		__nccwpck_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
-/******/ 	})();
-/******/ 	
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -6045,6 +6010,6 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(750);
+/******/ 	return __nccwpck_require__(482);
 /******/ })()
 ;

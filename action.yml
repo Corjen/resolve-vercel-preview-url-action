@@ -10,8 +10,8 @@ inputs:
   project_id:
     description: 'The vercel project id'
     required: true
-  github_commit_ref:
-    description: 'The commit ref you want to filter on'
+  github_commit_sha:
+    description: 'The commit sha you want to filter on'
     required: true
 
 outputs:

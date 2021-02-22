@@ -5846,16 +5846,17 @@ function run() {
             const vercelToken = core.getInput('vercel_token');
             const teamId = core.getInput('team_id');
             const projectId = core.getInput('project_id');
-            const githubCommitRef = core.getInput('github_commit_ref');
+            const githubCommitSha = core.getInput('github_commit_sha');
             yield wait(5000);
             const response = yield lib(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, { headers: {
                     authorization: `Bearer ${vercelToken}`
                 } }).then(handleFetchResponse);
             core.info(JSON.stringify({
                 projectId,
-                githubCommitRef
+                githubCommitSha
             }));
-            const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef);
+            const filtered = response.deployments.filter(d => d.meta.githubCommitSha === githubCommitSha);
+            core.info(JSON.stringify({ deployments: response.deployments.map(d => d.uid) }));
             if (filtered.length === 0) {
                 throw new Error(`No deployments found`);
             }

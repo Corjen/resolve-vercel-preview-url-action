@@ -3,6 +3,6 @@ export const wait = (milliseconds) => {
     if (typeof milliseconds !== 'number') {
       throw new Error('milliseconds not a number');
     }
-    setTimeout(() => resolve(), milliseconds)
+    setTimeout(() => resolve('done'), milliseconds)
   });
 };

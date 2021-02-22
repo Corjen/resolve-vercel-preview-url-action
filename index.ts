@@ -1,7 +1,7 @@
-import core from '@actions/core'
-import github from '@actions/github'
-import fetch from 'node-fetch'
-import wait from './wait'
+import * as core from '@actions/core'
+import * as github from '@actions/github'
+import * as fetch from 'node-fetch'
+import {wait} from './wait'
 
 async function run () {
   try {
@@ -13,12 +13,12 @@ async function run () {
     await wait(5000)
     const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
       authorization: `Bearer ${vercelToken}`
-    }}).then(res.json)
+    }}).then((res) => res.json())
 
-    core.info(`Input`, {
+    core.info(JSON.stringify({
       projectId,
       githubCommitRef
-    })
+    }))
 
     const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
 
@@ -35,6 +35,7 @@ async function run () {
 
   } catch (error) {
     core.setFailed(error.message);
+    process.exit(1)
   }
 }
 

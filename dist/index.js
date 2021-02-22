@@ -5776,7 +5776,7 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 482:
+/***/ 41:
 /***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
 "use strict";
@@ -5789,6 +5789,32 @@ var core = __nccwpck_require__(699);
 var github = __nccwpck_require__(806);
 // EXTERNAL MODULE: ./node_modules/node-fetch/lib/index.js
 var lib = __nccwpck_require__(486);
+// CONCATENATED MODULE: ./handle-fetch-response.ts
+var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+function handleFetchResponse(res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        if (res.ok) {
+            return res.json();
+        }
+        else {
+            if (res.status === 204) {
+                return {};
+            }
+            const body = yield res.json();
+            console.error(body);
+            throw new Error(res.statusText);
+        }
+    });
+}
+
 // CONCATENATED MODULE: ./wait.ts
 const wait = (milliseconds) => {
     return new Promise((resolve) => {
@@ -5800,7 +5826,7 @@ const wait = (milliseconds) => {
 };
 
 // CONCATENATED MODULE: ./index.ts
-var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
+var index_awaiter = (undefined && undefined.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
@@ -5813,8 +5839,9 @@ var __awaiter = (undefined && undefined.__awaiter) || function (thisArg, _argume
 
 
 
+
 function run() {
-    return __awaiter(this, void 0, void 0, function* () {
+    return index_awaiter(this, void 0, void 0, function* () {
         try {
             const vercelToken = core.getInput('vercel_token');
             const teamId = core.getInput('team_id');
@@ -5823,12 +5850,14 @@ function run() {
             yield wait(5000);
             const response = lib(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, { headers: {
                     authorization: `Bearer ${vercelToken}`
-                } }).then((res) => res.json());
+                } }).then(handleFetchResponse);
+            core.info(response);
             core.info(JSON.stringify({
                 projectId,
                 githubCommitRef
             }));
-            const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef);
+            // const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
+            const filtered = [];
             if (filtered.length === 0) {
                 throw new Error(`No deployments found`);
             }
@@ -6010,6 +6039,6 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(482);
+/******/ 	return __nccwpck_require__(41);
 /******/ })()
 ;

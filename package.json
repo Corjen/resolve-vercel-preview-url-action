@@ -1,6 +1,6 @@
 {
   "name": "resolve-vercel-preview-url-action",
-  "version": "1.0.0-canary.4",
+  "version": "1.0.0-canary.5",
   "main": "index.js",
   "license": "MIT",
   "scripts": {

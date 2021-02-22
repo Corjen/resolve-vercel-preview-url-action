@@ -21,8 +21,8 @@ async function run () {
       githubCommitRef
     }))
 
-    const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
-
+    // const filtered = response.deployments.filter(d => d.meta.githubCommitRef === githubCommitRef)
+    const filtered = []
     if(filtered.length === 0) {
       throw new Error(`No deployments found`)
     }

@@ -1,7 +1,7 @@
-const core = require('@actions/core');
-const github = require('@actions/github');
-const fetch = require('node-fetch')
-const wait = require('./wait')
+import core from '@actions/core'
+import github from '@actions/github'
+import fetch from 'node-fetch'
+import wait from './wait'
 
 async function run () {
   try {

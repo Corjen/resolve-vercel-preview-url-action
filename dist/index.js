@@ -2,27 +2,58 @@ module.exports =
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
-/***/ 368:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __nccwpck_require__) => {
+/***/ 750:
+/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
 
-const core = __nccwpck_require__(699);
-const github = __nccwpck_require__(806);
-const fetch = __nccwpck_require__(486)
-const wait = __nccwpck_require__(422)
+"use strict";
+// ESM COMPAT FLAG
+__nccwpck_require__.r(__webpack_exports__);
+
+// NAMESPACE OBJECT: ./wait.js
+var wait_namespaceObject = {};
+__nccwpck_require__.r(wait_namespaceObject);
+
+// EXTERNAL MODULE: ./node_modules/@actions/core/lib/core.js
+var core = __nccwpck_require__(699);
+var core_default = /*#__PURE__*/__nccwpck_require__.n(core);
+
+// EXTERNAL MODULE: ./node_modules/@actions/github/lib/github.js
+var github = __nccwpck_require__(806);
+var github_default = /*#__PURE__*/__nccwpck_require__.n(github);
+
+// EXTERNAL MODULE: ./node_modules/node-fetch/lib/index.js
+var lib = __nccwpck_require__(486);
+var lib_default = /*#__PURE__*/__nccwpck_require__.n(lib);
+
+// CONCATENATED MODULE: ./wait.js
+const wait = (milliseconds) => {
+  return new Promise((resolve) => {
+    if (typeof milliseconds !== 'number') {
+      throw new Error('milliseconds not a number');
+    }
+    setTimeout(() => resolve(), milliseconds)
+  });
+};
+
+// CONCATENATED MODULE: ./index.js
+
+
+
+
 
 async function run () {
   try {
-    const vercelToken = core.getInput('vercel_token')
-    const teamId = core.getInput('team_id')
-    const projectId = core.getInput('project_id')
-    const githubCommitRef = core.getInput('github_commit_ref')
+    const vercelToken = core_default().getInput('vercel_token')
+    const teamId = core_default().getInput('team_id')
+    const projectId = core_default().getInput('project_id')
+    const githubCommitRef = core_default().getInput('github_commit_ref')
 
-    await wait(5000)
-    const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
+    await (0,wait_namespaceObject.default)(5000)
+    const response = lib_default()(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
       authorization: `Bearer ${vercelToken}`
     }}).then(res.json)
 
-    core.info(`Input`, {
+    core_default().info(`Input`, {
       projectId,
       githubCommitRef
     })
@@ -35,13 +66,13 @@ async function run () {
 
     console.log(`url: ${filtered[0].url}`)
 
-    core.setOutput("url", filtered[0].url);
+    core_default().setOutput("url", filtered[0].url);
     // Get the JSON webhook payload for the event that triggered the workflow
-    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    const payload = JSON.stringify((github_default()).context.payload, undefined, 2)
     console.log(`The event payload: ${payload}`);
 
   } catch (error) {
-    core.setFailed(error.message);
+    core_default().setFailed(error.message);
   }
 }
 
@@ -5824,26 +5855,6 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
-/***/ 422:
-/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
-
-"use strict";
-__nccwpck_require__.r(__webpack_exports__);
-/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
-/* harmony export */   "wait": () => /* binding */ wait
-/* harmony export */ });
-const wait = (milliseconds) => {
-  return new Promise((resolve) => {
-    if (typeof milliseconds !== 'number') {
-      throw new Error('milliseconds not a number');
-    }
-    setTimeout(() => resolve(), milliseconds)
-  });
-};
-
-
-/***/ }),
-
 /***/ 778:
 /***/ ((module) => {
 
@@ -5988,6 +5999,18 @@ module.exports = require("zlib");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/compat get default export */
+/******/ 	(() => {
+/******/ 		// getDefaultExport function for compatibility with non-harmony modules
+/******/ 		__nccwpck_require__.n = (module) => {
+/******/ 			var getter = module && module.__esModule ?
+/******/ 				() => module['default'] :
+/******/ 				() => module;
+/******/ 			__nccwpck_require__.d(getter, { a: getter });
+/******/ 			return getter;
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -6022,6 +6045,6 @@ module.exports = require("zlib");;
 /******/ 	// module exports must be returned from runtime so entry inlining is disabled
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
-/******/ 	return __nccwpck_require__(368);
+/******/ 	return __nccwpck_require__(750);
 /******/ })()
 ;

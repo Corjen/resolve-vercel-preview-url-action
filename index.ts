@@ -1,6 +1,7 @@
 import * as core from '@actions/core'
 import * as github from '@actions/github'
 import * as fetch from 'node-fetch'
+import { handleFetchResponse } from './handle-fetch-response'
 import {wait} from './wait'
 
 async function run () {
@@ -13,8 +14,8 @@ async function run () {
     await wait(5000)
     const response = fetch(`https://api.zeit.co/v5/now/deployments?teamId=${teamId}&projectId=${projectId}`, {headers: {
       authorization: `Bearer ${vercelToken}`
-    }}).then((res) => res.json())
-
+    }}).then(handleFetchResponse)
+    core.info(response)
     core.info(JSON.stringify({
       projectId,
       githubCommitRef

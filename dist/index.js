@@ -8,7 +8,7 @@ module.exports =
 const core = __nccwpck_require__(699);
 const github = __nccwpck_require__(806);
 const fetch = __nccwpck_require__(486)
-const wait = __nccwpck_require__(368)
+const wait = __nccwpck_require__(422)
 
 async function run () {
   try {
@@ -5824,6 +5824,26 @@ function wrappy (fn, cb) {
 
 /***/ }),
 
+/***/ 422:
+/***/ ((__unused_webpack_module, __webpack_exports__, __nccwpck_require__) => {
+
+"use strict";
+__nccwpck_require__.r(__webpack_exports__);
+/* harmony export */ __nccwpck_require__.d(__webpack_exports__, {
+/* harmony export */   "wait": () => /* binding */ wait
+/* harmony export */ });
+const wait = (milliseconds) => {
+  return new Promise((resolve) => {
+    if (typeof milliseconds !== 'number') {
+      throw new Error('milliseconds not a number');
+    }
+    setTimeout(() => resolve(), milliseconds)
+  });
+};
+
+
+/***/ }),
+
 /***/ 778:
 /***/ ((module) => {
 
@@ -5968,6 +5988,34 @@ module.exports = require("zlib");;
 /******/ 	}
 /******/ 	
 /************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__nccwpck_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__nccwpck_require__.o(definition, key) && !__nccwpck_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__nccwpck_require__.o = (obj, prop) => Object.prototype.hasOwnProperty.call(obj, prop)
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__nccwpck_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
 /******/ 	/* webpack/runtime/compat */
 /******/ 	
 /******/ 	__nccwpck_require__.ab = __dirname + "/";/************************************************************************/

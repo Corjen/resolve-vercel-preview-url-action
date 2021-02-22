@@ -1,4 +1,4 @@
-const wait = (milliseconds) => {
+export const wait = (milliseconds) => {
   return new Promise((resolve) => {
     if (typeof milliseconds !== 'number') {
       throw new Error('milliseconds not a number');
@@ -6,5 +6,3 @@ const wait = (milliseconds) => {
     setTimeout(() => resolve(), milliseconds)
   });
 };
-
-module.exports = wait;
